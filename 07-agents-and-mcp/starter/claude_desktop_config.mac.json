@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/YOUR-NAME/mcp-practice"
+      ]
+    },
+    "sahyadri-library": {
+      "command": "/Users/YOUR-NAME/mcp-library/.venv/bin/python",
+      "args": ["/Users/YOUR-NAME/mcp-library/library_server.py"]
+    }
+  }
+}

@@ -1,0 +1,219 @@
+{
+  "name": "Email to AI summary to Google Sheet",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "967d37b4-0276-48bd-b77b-921d483b1e0c",
+      "name": "Run with sample emails",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Sample emails for the lab. Each item becomes one email that flows through the workflow.\n// Add your own by copying one block and changing the text.\nconst emails = [\n  {\n    \"received\": \"2026-10-27 09:12\",\n    \"from\": \"neha.sharma@example.com\",\n    \"subject\": \"Booking for 4 people, Udaipur weekend\",\n    \"body\": \"Hi team, we'd like to book a 2-night Udaipur trip for 4 adults, leaving Jaipur on Friday 14 November and returning Sunday 16 November. A hotel near Lake Pichola would be lovely, and we need an AC car with driver. Please share options and the total cost. Thanks, Neha\"\n  },\n  {\n    \"received\": \"2026-10-27 09:47\",\n    \"from\": \"r.mehta@example.com\",\n    \"subject\": \"Very disappointed with the Jaisalmer desert camp\",\n    \"body\": \"We came back from the Jaisalmer package yesterday. The desert camp was nothing like the photos. The tent was dirty, there was no hot water, and the camel safari was cut to 20 minutes. Our guide Vikram was excellent, but the camp spoiled the trip. I expect someone to call me today. Rajesh Mehta, booking PCT-5521\"\n  },\n  {\n    \"received\": \"2026-10-27 10:05\",\n    \"from\": \"ankit.verma@example.com\",\n    \"subject\": \"Refund for cancelled Ranthambore safari\",\n    \"body\": \"Hello, the forest department cancelled our Ranthambore safari on 22 October because of rain. Your office said we would get a full refund of the safari fee within 7 days, but nothing has reached my account yet. Booking reference PCT-5490. Please confirm when the refund will be processed. Regards, Ankit\"\n  },\n  {\n    \"received\": \"2026-10-27 10:30\",\n    \"from\": \"rewards@example-prize-centre.biz\",\n    \"subject\": \"Congratulations, you have won an iPhone\",\n    \"body\": \"Dear valued customer, your email was selected in our festive lucky draw. To claim your new phone, click the link below and enter your bank details within 24 hours, or the prize will be given to someone else.\"\n  },\n  {\n    \"received\": \"2026-10-27 11:02\",\n    \"from\": \"priya.iyer@example.com\",\n    \"subject\": \"Do you need passport for Bhutan?\",\n    \"body\": \"Hi, quick question before we book anything. My parents want to visit Bhutan in March. Do Indian citizens need a passport, or is a voter ID enough? Also, do you organise Bhutan tours at all? Thanks, Priya\"\n  },\n  {\n    \"received\": \"2026-10-27 11:40\",\n    \"from\": \"sunil.rathore@example.com\",\n    \"subject\": \"Hotel change ho sakta hai? Pushkar trip\",\n    \"body\": \"Namaste, hamari Pushkar booking PCT-5533 hai, 8 November ke liye. Hotel thoda door hai mela ground se. Kya aap hotel change kar sakte ho kisi paas wale hotel mein? Extra charge ho toh bata dena. Dhanyavaad, Sunil\"\n  }\n];\n\nreturn emails.map(email => ({ json: email }));\n"
+      },
+      "id": "bc1f1f21-92a9-4519-91d8-04799405bdf9",
+      "name": "Sample emails",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You sort incoming emails for Pink City Trails, a travel agency in Jaipur.\nRead the email below. Reply with ONLY a JSON object, with no other text and no code fences, in exactly this shape:\n{\"summary\": \"one sentence in English, under 25 words\", \"label\": \"booking\"}\n\nThe label must be exactly one of these words: booking, complaint, refund, spam, other.\n- booking: a new booking, or a change to an existing booking\n- complaint: unhappy with a service already received\n- refund: asking for money back\n- spam: unwanted marketing, scams or phishing\n- other: anything else\n\nFrom: {{ $json.from }}\nSubject: {{ $json.subject }}\nBody:\n{{ $json.body }}"
+      },
+      "id": "acfb1c6c-ce87-4c0a-9358-a421f8a8f68f",
+      "name": "AI summary and label",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "id",
+          "value": "claude-sonnet-5-5"
+        },
+        "options": {}
+      },
+      "id": "b5b60374-74f7-45c4-9215-f321ec0d271e",
+      "name": "Anthropic Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        380,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "id",
+          "value": "gpt-5-mini"
+        },
+        "options": {}
+      },
+      "id": "fd65d639-8398-442d-af19-0262bd3bb907",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        600,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Checks each AI reply before it goes to the sheet.\n// It reads the JSON, keeps only allowed labels, and marks anything odd for a person to review.\nconst allowed = ['booking', 'complaint', 'refund', 'spam', 'other'];\nconst emails = $('Sample emails').all();   // change this name if you swap in a Gmail trigger\n\nreturn $input.all().map((item, i) => {\n  const email = emails[i] ? emails[i].json : {};\n  const raw = item.json.text !== undefined ? item.json.text : item.json;\n  let data = {};\n  let problem = '';\n\n  if (typeof raw === 'string') {\n    const cleaned = raw.replace(/```json/g, '').replace(/```/g, '').trim();\n    try {\n      data = JSON.parse(cleaned);\n    } catch (error) {\n      problem = 'AI reply was not valid JSON';\n    }\n  } else {\n    data = raw;\n  }\n\n  let label = String(data.label || '').toLowerCase().trim();\n  if (!problem && !allowed.includes(label)) {\n    problem = 'unknown label: ' + label;\n  }\n  if (problem) {\n    label = 'needs review';\n  }\n\n  return {\n    json: {\n      received: email.received || '',\n      from: email.from || '',\n      subject: email.subject || '',\n      summary: data.summary || '',\n      label: label,\n      check: problem || 'ok',\n    },\n  };\n});\n"
+      },
+      "id": "a657c662-d680-4df7-bb41-ec6067a36037",
+      "name": "Check the AI reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        820,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "dfe6cbc1-3aab-471b-932a-f17c910f227e",
+      "name": "Add row to Google Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1060,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Email to AI summary to sheet\n1. Connect ONE chat model below to the **Model** input of *AI summary and label*: Gemini (free key from Google AI Studio), Anthropic or OpenAI, whichever API key you have.\n2. Add your API key as a credential on that model node.\n3. Connect Google Sheets and pick your sheet.\n4. Click **Test workflow**.",
+        "height": 220,
+        "width": 420,
+        "color": 4
+      },
+      "id": "dfa872d8-52bd-4a08-8678-68e394873797",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Pick one model\nUse only one. Check the provider's model list for current names, and change the model ID in the node if needed.",
+        "height": 160,
+        "width": 660,
+        "color": 6
+      },
+      "id": "5f31e4f7-dc53-44c6-b0e7-9e328a935523",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        340,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.1-flash-lite",
+        "options": {}
+      },
+      "id": "70ac168f-98d8-4c5d-8463-ae5a030d70b2",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        820,
+        560
+      ]
+    }
+  ],
+  "connections": {
+    "Run with sample emails": {
+      "main": [
+        [
+          {
+            "node": "Sample emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sample emails": {
+      "main": [
+        [
+          {
+            "node": "AI summary and label",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI summary and label": {
+      "main": [
+        [
+          {
+            "node": "Check the AI reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check the AI reply": {
+      "main": [
+        [
+          {
+            "node": "Add row to Google Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

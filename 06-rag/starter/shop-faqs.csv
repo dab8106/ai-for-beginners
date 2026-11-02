@@ -1,0 +1,51 @@
+id,category,question,answer
+1,Orders,How do I place an order?,"Add the product to your cart, tap Checkout, choose a delivery address and a payment method, then tap Place order. You get an SMS and an email with your order number."
+2,Orders,Can I change my delivery address after placing an order?,"Yes, until the order is packed. Go to My Orders, open the order and tap Change address. After packing, the address can't be changed, but you can cancel and order again."
+3,Orders,How do I cancel an order?,"Open My Orders, select the order and tap Cancel. Orders can be cancelled free of charge until they are shipped. Prepaid amounts are returned to the original payment method."
+4,Orders,Why was my order cancelled by the shop?,"We cancel an order if the item goes out of stock, the address is outside our delivery area, or the payment could not be confirmed. You get an SMS with the reason, and any amount paid is returned."
+5,Orders,Can I order something as a gift for someone in another city?,Yes. Enter the recipient's address at checkout and tick This is a gift. The invoice is emailed to you and is not kept in the box.
+6,Orders,How do I get a GST invoice for my business?,Add your GSTIN and business name at checkout under Use GST invoice. The tax invoice with your GSTIN is available in My Orders after the item is shipped.
+7,Orders,Where can I find my invoice?,"Open My Orders, select the order and tap Download invoice. The invoice is ready once the order is shipped."
+8,Delivery,How long does delivery take?,Metro cities usually get orders in 2 to 3 working days. Other towns take 4 to 7 working days. The expected date is shown at checkout.
+9,Delivery,Do you deliver to my PIN code?,Enter your six-digit PIN code on any product page. It shows whether we deliver there and the expected delivery date.
+10,Delivery,How can I track my order?,Open My Orders and tap Track. You also get an SMS with a tracking link when the order is shipped.
+11,Delivery,Is there a delivery charge?,"Delivery is free on orders above a minimum value shown at checkout. Below that, a small delivery fee is added before you pay."
+12,Delivery,Do you offer same-day delivery?,"Same-day delivery is available in Mumbai, Pune, Bengaluru and Hyderabad for orders placed before 12 noon, on items marked Same day."
+13,Delivery,The courier marked my order as delivered but I didn't receive it.,"Please report it within 48 hours from My Orders, Help, Not received. We check with the courier and reply within 2 working days."
+14,Delivery,Can I choose a delivery time slot?,"Time slots are available for large appliances such as TVs, fridges and washing machines. For other items the courier delivers between 9 am and 8 pm."
+15,Delivery,My package arrived damaged. What should I do?,"Do not accept a visibly damaged package. If you notice damage after opening, report it within 48 hours with photos of the box and the product."
+16,Payments,Which payment methods do you accept?,"UPI, debit and credit cards, net banking, wallets, EMI on selected cards, and cash on delivery for eligible orders."
+17,Payments,My UPI payment was successful but the order failed.,"If the amount was deducted but no order was created, it is reversed automatically to your bank account within 5 to 7 working days. You don't need to do anything."
+18,Payments,Is cash on delivery available?,"Cash on delivery is available for orders up to a limit shown at checkout, and not for some high-value items."
+19,Payments,Is it safe to save my card on your site?,"We never store your full card number. Cards are saved as secure tokens with your bank, as required by RBI rules, and you can remove them anytime."
+20,Payments,Why was my card payment declined?,"Common reasons are a wrong OTP, an international or online usage limit on the card, or a daily limit. Please check with your bank, or try UPI."
+21,Payments,Can I pay part with a gift card and part with UPI?,"Yes. Apply the gift card first at checkout, then pay the balance with any other method."
+22,Payments,I was charged twice for the same order.,"The extra charge is usually a pending authorisation that your bank releases within 5 to 7 working days. If it still shows after 7 days, contact us with both transaction IDs."
+23,Returns,What is your return policy?,"Most products can be returned within 7 days of delivery if unused and in the original box with all accessories. Some items, such as earphones and software, are not returnable once opened."
+24,Returns,How do I return a product?,"Open My Orders, select the item and tap Return. Choose a reason and a pickup slot. Our courier picks it up from your address."
+25,Returns,How long does a refund take after I return a product?,"After the returned item passes our quality check, the refund is started within 2 working days. UPI and card refunds reach you in 5 to 7 working days."
+26,Returns,Can I get a replacement instead of a refund?,"Yes, for items that arrive defective or damaged, you can choose a replacement of the same model if it is in stock."
+27,Returns,Why was my return request rejected?,"Returns are rejected if the item is outside the 7-day window, shows physical damage or use, or is missing the box, accessories or serial number label."
+28,Returns,Do I have to pay for return pickup?,No. Pickup is free for all eligible returns.
+29,Returns,Where does my refund go if I paid cash on delivery?,"For cash on delivery orders, the refund goes to your bank account. Add your account details in the return request, or choose store credit for a faster refund."
+30,Warranty,Do your products come with a warranty?,"All new products come with the manufacturer's warranty, usually one year. The warranty period is listed on each product page."
+31,Warranty,How do I claim warranty on my phone?,Take the phone and the invoice to an authorised service centre of the brand. You can find the nearest one on the brand's website.
+32,Warranty,Do you sell extended warranty?,"Yes, an extended warranty plan can be added at checkout for many TVs, laptops and appliances. It must be bought with the product or within 30 days."
+33,Warranty,Is accidental damage covered?,The standard warranty does not cover accidental or liquid damage. A separate damage protection plan can be added for selected phones and laptops.
+34,Warranty,Who installs my new TV or air conditioner?,Free installation is arranged by the brand for most TVs and ACs. The technician usually visits within 2 working days of delivery.
+35,Warranty,My laptop stopped working after two months.,"It is under the manufacturer's warranty. Contact the brand's service centre with your invoice. If it failed within 7 days of delivery, you can also request a replacement from us."
+36,Account,How do I reset my password?,"On the login screen, tap Forgot password and enter your registered mobile number or email. You get a one-time link to set a new password."
+37,Account,How do I change my registered mobile number?,"Go to My Account, Profile, and tap Edit next to the mobile number. We send an OTP to the new number to confirm."
+38,Account,How do I delete my account?,"Go to My Account, Privacy, Delete account. Open orders must be completed first. Invoices are kept for the period required by tax law."
+39,Account,I'm getting too many promotional messages.,"Go to My Account, Notifications, and switch off offers on SMS, WhatsApp or email. Order updates will still be sent."
+40,Account,Someone else logged in to my account.,"Change your password immediately and log out of all devices from My Account, Security. Then contact support so we can check recent orders."
+41,Offers,Is no-cost EMI available?,No-cost EMI is available on selected products with selected bank cards. The eligible tenures are shown on the product page and at checkout.
+42,Offers,Why didn't my coupon code work?,"Each coupon has a minimum order value, an expiry date and a list of eligible products. Check the coupon details, and note that only one coupon can be used per order."
+43,Offers,How does the exchange offer work for old phones?,"Choose Exchange on the product page and answer a few questions about your old phone. The exchange value is deducted from the price, and the courier collects the old phone on delivery."
+44,Offers,Do you offer student discounts?,"Yes. Verify your college email under My Account, Student, to unlock student prices on laptops, tablets and accessories."
+45,Offers,When is your big festive sale?,We run a festive sale before Diwali each year. Dates are announced on the home page and by email about two weeks before.
+46,Offers,Do you have a price match guarantee?,"No. Prices on our site can change during sales, and we do not match prices from other sellers."
+47,Product help,How do I connect my new smartwatch to my phone?,"Install the brand's companion app, turn on Bluetooth, and follow the pairing steps in the app. Keep the watch charged above 30 percent while pairing."
+48,Product help,Which TV size is right for my room?,"A simple guide: for a viewing distance of about 2 metres, a 43 to 50 inch TV works well. For 3 metres, consider 55 to 65 inches."
+49,Product help,Is this charger compatible with my phone?,"Check the charger's connector type and supported fast-charging standard on the product page, and compare them with your phone's specifications."
+50,Product help,Can I talk to a person instead of the chatbot?,"Yes. Type Agent in the chat, or call our support line from 9 am to 9 pm, all days. The number is on the Contact us page."
